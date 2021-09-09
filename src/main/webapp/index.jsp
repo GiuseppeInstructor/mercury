@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-home page
+home page 2
 </body>
 </html>
