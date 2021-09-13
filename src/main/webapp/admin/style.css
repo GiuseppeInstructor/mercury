@@ -1,0 +1,40 @@
+@charset "ISO-8859-1";
+body 
+{
+	background-color: cyan;
+	font-size: 12pt;
+	font-family: Helvetica, Arial, sans-serif;
+	font-weight: bold;
+}
+
+.titolo
+{
+	font-size: 20pt;
+	font-family: Helvetica, Arial, sans-serif;
+	font-weight: bold;
+}
+
+table
+{
+	width: auto;
+}
+
+td
+{
+    vertical-align: middle;
+    padding: 1em 1em 1em 1em;
+    margin: 0em 0em 0em 0em;
+    width: auto;
+ }
+
+.button
+{
+	margin-top :10px;
+	margin-left :170px;
+
+}
+.img
+{
+	max-height:100%; 
+	max-width:100%;
+}
