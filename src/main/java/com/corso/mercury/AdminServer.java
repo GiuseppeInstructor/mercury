@@ -24,8 +24,7 @@ public class AdminServer extends HttpServlet {
 		String Nome = null;
 		String MotivoBan = null;
 		String New_MotivoBan = null;
-		int Index = 0;// 1=Elimina (eventi) 2=Ripristina (eventi) 3=Blocca (enti) 4=Riammetti (Enti)
-		RequestDispatcher rd=null;
+		int Index = 0;// 1=Elimina (eventi) 2=Ripristina (eventi) 3=Blocca (enti) 4=Riammetti (Enti) 5=Ridireziona
 		//eventi
 		try {
 		ResultSet rst=AdminServer.query().executeQuery("SELECT nome FROM eventi"); //imposto una query per ottenere i titoli degli eventi
@@ -52,7 +51,7 @@ public class AdminServer extends HttpServlet {
 				while(rst2.next()){ //faccio scorrere la query finche non trovo il nome corretto
 					if(request.getParameter(rst2.getString("nome")) != null && request.getParameter(rst2.getString("nome")).equals("Blocca")) {
 						request.setAttribute("EnteDaBloccare",rst2.getString("nome"));
-						getServletContext().getRequestDispatcher("/admin/moduloban.jsp").forward(request,response);
+						Index=5;
 					}
 					else if(request.getParameter(rst2.getString("nome")) != null && request.getParameter(rst2.getString("nome")).equals("Sospendi")) {
 						Nome="'"+rst2.getString("nome")+"'"; //stessa cosa per gli eventi
@@ -76,19 +75,56 @@ public class AdminServer extends HttpServlet {
 			// eseguo la query in base alla situazione
 			if(Nome!=null&& Index==1) {
 				AdminServer.query().execute("UPDATE eventi SET eliminazione = 1 WHERE nome ="+Nome);
+				request.setAttribute("risultato",request.getParameter("risultato"));
 				getServletContext().getRequestDispatcher("/admin/eventi.jsp").forward(request,response);
 			}
 			else if(Nome!=null&& Index==2) {
 				AdminServer.query().execute("UPDATE eventi SET eliminazione = 0 WHERE nome ="+Nome);
+				request.setAttribute("risultato",request.getParameter("risultato"));
 				getServletContext().getRequestDispatcher("/admin/eventi.jsp").forward(request,response);
 			}
 			else if(Nome!=null&& Index==3) {
-				AdminServer.query().execute("UPDATE ente SET eliminato = 1 , motivazione="+"'"+New_MotivoBan+"'"+" WHERE nome ="+Nome);
+				AdminServer.query().execute("UPDATE ente P,accesso A SET P.eliminato = 1 , P.motivazione="+"'"+New_MotivoBan+"'"+", A.tipo=3 WHERE P.nome ="+Nome+" AND P.pk=A.ente_pk;");
+				request.setAttribute("risultato",request.getParameter("risultato"));
 				getServletContext().getRequestDispatcher("/admin/enti.jsp").forward(request,response);
 			}
 			else if(Nome!=null&& Index==4) {
-				AdminServer.query().execute("UPDATE ente SET eliminato = 0 , motivazione=NULL WHERE nome ="+Nome);
+				AdminServer.query().execute("UPDATE ente P,accesso A SET P.eliminato = 0 , P.motivazione=NULL, A.tipo=2 WHERE P.nome ="+Nome+" AND P.pk=A.ente_pk;");
+				request.setAttribute("risultato",request.getParameter("risultato"));
 				getServletContext().getRequestDispatcher("/admin/enti.jsp").forward(request,response);
+			}
+			else if(Index==5)
+			{
+				getServletContext().getRequestDispatcher("/admin/moduloban.jsp").forward(request,response);
+			}
+			//login
+			else if(Nome==null&& Index==0) {
+				String email=request.getParameter("Lemail");
+				String password=request.getParameter("Lpass");
+				String[] data= AdminServer.login(email,password);
+				
+				if(Integer.parseInt(data[0])==0)
+				{
+					request.setAttribute("risultato","Email o Password Errati");
+					getServletContext().getRequestDispatcher("/admin/login.jsp").forward(request,response);
+				}
+				else if(Integer.parseInt(data[0])==1)
+				{
+					
+					request.setAttribute("risultato",data[1]);
+					getServletContext().getRequestDispatcher("/admin/eventi.jsp").forward(request,response);
+				}
+				else if(Integer.parseInt(data[0])==2)
+				{
+					request.setAttribute("risultato",data[1]);
+					getServletContext().getRequestDispatcher("/admin/eventi.jsp").forward(request,response);
+				}
+				else if(Integer.parseInt(data[0])==3)
+				{
+					request.setAttribute("risultato","Questo account è stato SOSPESO Motivazione= "+data[2]);
+					getServletContext().getRequestDispatcher("/admin/login.jsp").forward(request,response);
+				}
+				
 			}
 			else out.println("Errore");
 		}
@@ -116,5 +152,29 @@ public static Statement query() {
 		
 	}
 
+public static String[] login(String email, String password) {
+		String[] data = {"0",null,null};
+	
+		try {
+			ResultSet rst3=AdminServer.query().executeQuery("SELECT P.motivazione,P.nome,A.tipo,A.emailk,A.password,tipo FROM accesso A INNER JOIN ente P ON p.pk=A.ente_pk");
+			while(rst3.next()) {
+				if (rst3.getString("A.emailk").equals(email) && rst3.getString("A.password").equals(password) && rst3.getString("A.tipo").equals("3")) {
+					data[0]=rst3.getString("A.tipo");
+					data[1]=rst3.getString("P.nome");
+					data[2]=rst3.getString("P.motivazione");
+				}
+				else if (rst3.getString("A.emailk").equals(email) && rst3.getString("A.password").equals(password)) {
+					data[0]=rst3.getString("A.tipo");
+					data[1]=rst3.getString("P.nome");
+				}
+				
+			}
 
+		} 
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return data;
+	}
 }

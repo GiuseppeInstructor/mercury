@@ -8,18 +8,46 @@
 <title>Admin Page</title>
 </head>
 <body>
+<%
+
+String accesso = (String)request.getAttribute("risultato"); 
+if (accesso == null)
+{
+	accesso=request.getParameter("risultato");
+	if (accesso == null){
+		response.sendRedirect("/mercury/admin/login.jsp");
+	}
+}
+if(request.getParameter("pagina")!=null){
+	if(request.getParameter("pagina").equals("Torna Alla Home"))
+	{
+		response.sendRedirect("/mercury/index.jsp");
+	}
+	else if(request.getParameter("pagina").equals("Elenco Enti"))
+	{
+		getServletContext().getRequestDispatcher("/admin/enti.jsp").forward(request,response);
+		
+	}
+}
+if(request.getParameter("Esci")!=null)
+{
+	response.sendRedirect("/mercury/admin/login.jsp");
+}
+%>
 <p class=titolo>Mercury Admin Page</p>
+<p class=titolo>Benvenuto <%=accesso %></p>
 <br>
 <br>
+<form action="/mercury/admin/eventi.jsp" method="post">
+<input type="submit" name="Esci" value="Esci">
+<input type="hidden" name="risultato" value=<%=accesso%>>
 <table border='3'>
   <tr>
-    <td><a href="/mercury/index.jsp">Torna Alla Home</a></td>
-    <td><a href="/mercury/admin/eventi.jsp">Elenco Eventi</a> </td>
-    <td><a href="/mercury/admin/enti.jsp">Elenco Enti</a></td>
+  <td><input type="submit" name="pagina" value="Torna Alla Home"></td>
+    <td><input type="submit" name="pagina" value="Elenco Enti"></td>
   </tr>
 </table>
   <br>
-<form action="/mercury/admin/eventi.jsp" method="post">
 <table border='3'>
   <tr>
     <td><input type="submit" name="nome" value="Elimina"></td>
@@ -40,6 +68,7 @@
  if(modalita==null||modalita.equals("Elimina")){ 
  %>
 <form action="/mercury/AdminServer" method="post">
+<input type="hidden" name="risultato" value=<%=accesso%>>
 <table border='3'>
  <tr><td>Immagine</td><td>Nome Evento</td><td>Tipo Evento</td><td>Ente</td><td>Comune</td><td>Data</td><td>Elimina</td></tr>
 	
@@ -69,6 +98,7 @@
  else{
     %>
     <form action="/mercury/AdminServer" method="post">
+    <input type="hidden" name="risultato" value=<%=accesso%>>
 <table border='3'>
  <tr><td>Immagine</td><td>Nome Evento</td><td>Tipo Evento</td><td>Ente</td><td>Comune</td><td>Data</td><td>Ripristina</td></tr>
 	

@@ -8,8 +8,20 @@
 <title>Blocca Enti</title>
 </head>
 <body>
+<% 
+String accesso = (String)request.getAttribute("risultato"); 
+if (accesso == null)
+{
+	accesso=request.getParameter("risultato");
+	if (accesso == null){
+		response.sendRedirect("/mercury/admin/login.jsp");
+	}
+}
+%>
 <p class=titolo>Modulo di Sospensione per ${EnteDaBloccare}</p>
 <form action="/mercury/AdminServer" method="post">
+<input type="hidden" name="risultato" value=<%=accesso%>>
+<p style="font-size: 15pt;">Inserire il motivo del blocco</p>
 <input type="text" name="motivo" style="width:300px; height:60px;"><br>
 <a href="/mercury/admin/enti.jsp">Annulla</a>
 <input class=button type="submit" name="${EnteDaBloccare}" value="Sospendi"><br>

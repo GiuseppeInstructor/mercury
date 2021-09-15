@@ -8,19 +8,41 @@
 <title>Admin Page</title>
 </head>
 <body>
+<%
+
+String accesso = (String)request.getAttribute("risultato"); 
+if (accesso == null)
+{
+	accesso=request.getParameter("risultato");
+	if (accesso == null){
+		response.sendRedirect("/mercury/admin/login.jsp");
+	}
+}
+if(request.getParameter("pagina")!=null){
+	if(request.getParameter("pagina").equals("Torna Alla Home"))
+	{
+		response.sendRedirect("/mercury/index.jsp");
+	}
+	else if(request.getParameter("pagina").equals("Elenco Eventi"))
+	{
+		getServletContext().getRequestDispatcher("/admin/eventi.jsp").forward(request,response);
+		
+	}
+}
+%>
 <p class=titolo>Mercury Admin Page</p>
+<p class=titolo>Benvenuto <%=accesso %></p>
 <br>
 <br>
-<table border='3'> 
+<form action="/mercury/admin/enti.jsp" method="post">
+<input type="hidden" name="risultato" value=<%=accesso%>>
+<table border='3'>
   <tr>
-    <td><a href="/mercury/index.jsp">Torna Alla Home</a></td>
-    <td><a href="/mercury/admin/eventi.jsp">Elenco Eventi</a> </td>
-    <td><a href="/mercury/admin/enti.jsp">Elenco Enti</a></td>
+  <td><input type="submit" name="pagina" value="Torna Alla Home"></td>
+    <td><input type="submit" name="pagina" value="Elenco Eventi"></td>
   </tr>
 </table>
   <br>
-  <br>
-<form action="/mercury/admin/enti.jsp" method="post">
 <table border='3'>
   <tr>
     <td><input type="submit" name="nome" value="Blocca"></td>
@@ -41,6 +63,7 @@
  if(modalita==null||modalita.equals("Blocca")){ 
  %>
 <form action="/mercury/AdminServer" method="post">
+<input type="hidden" name="risultato" value=<%=accesso%>>
 <table border='3'>
  <tr><td>Immagine</td><td>Nome Ente</td><td>Nome Referente</td><td>Iscrizione CC</td><td>E-mail</td><td>Comune</td><td>Blocca</td></tr>
 	
@@ -70,6 +93,7 @@
  else{
     %>
     <form action="/mercury/AdminServer" method="post">
+    <input type="hidden" name="risultato" value=<%=accesso%>>
 <table border='3'>
  <tr><td>Immagine</td><td>Nome Ente</td><td>Nome Referente</td><td>Iscrizione CC</td><td>E-mail</td><td>Comune</td><td>Motivo</td><td>Riammetti</td></tr>
 	
