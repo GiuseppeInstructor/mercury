@@ -20,7 +20,7 @@ if (accesso == null)
 %>
 <p class=titolo>Modulo di Sospensione per ${EnteDaBloccare}</p>
 <form action="/mercury/AdminServer" method="post">
-<input type="hidden" name="risultato" value=<%=accesso%>>
+<input type="hidden" name="risultato" value="<%=accesso%>">
 <p style="font-size: 15pt;">Inserire il motivo del blocco</p>
 <input type="text" name="motivo" style="width:300px; height:60px;"><br>
 <a href="/mercury/admin/enti.jsp">Annulla</a>

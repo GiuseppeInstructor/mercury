@@ -29,13 +29,22 @@ if(request.getParameter("pagina")!=null){
 		
 	}
 }
+if(request.getParameter("Esci")!=null)
+{
+	response.sendRedirect("/mercury/admin/login.jsp");
+}
 %>
 <p class=titolo>Mercury Admin Page</p>
 <p class=titolo>Benvenuto <%=accesso %></p>
 <br>
 <br>
 <form action="/mercury/admin/enti.jsp" method="post">
-<input type="hidden" name="risultato" value=<%=accesso%>>
+<table border='3'>
+  <tr>
+  <td><input type="submit" name="Esci" value="Esci"></td>
+  </tr>
+</table>
+<input type="hidden" name="risultato" value="<%=accesso%>">
 <table border='3'>
   <tr>
   <td><input type="submit" name="pagina" value="Torna Alla Home"></td>
@@ -63,7 +72,7 @@ if(request.getParameter("pagina")!=null){
  if(modalita==null||modalita.equals("Blocca")){ 
  %>
 <form action="/mercury/AdminServer" method="post">
-<input type="hidden" name="risultato" value=<%=accesso%>>
+<input type="hidden" name="risultato" value="<%=accesso%>">
 <table border='3'>
  <tr><td>Immagine</td><td>Nome Ente</td><td>Nome Referente</td><td>Iscrizione CC</td><td>E-mail</td><td>Comune</td><td>Blocca</td></tr>
 	
@@ -74,7 +83,7 @@ if(request.getParameter("pagina")!=null){
 	 %>
 	
   	<tr>
-  	<td style="width:120px; height:100px;"><img class=img src=<%= rst.getString("P.logo")%> alt="Foto Ente"></td>
+  	<td style="width:120px; height:100px;"><img class=img src="<%= rst.getString("P.logo")%>" alt="Foto Ente"></td>
     <td><%= rst.getString("P.nome")%></td>
     <td><%= rst.getString("P.nome_referente")%></td>
     <td><%= rst.getString("P.iscrizione_cc")%></td>
@@ -93,7 +102,7 @@ if(request.getParameter("pagina")!=null){
  else{
     %>
     <form action="/mercury/AdminServer" method="post">
-    <input type="hidden" name="risultato" value=<%=accesso%>>
+    <input type="hidden" name="risultato" value="<%=accesso%>">
 <table border='3'>
  <tr><td>Immagine</td><td>Nome Ente</td><td>Nome Referente</td><td>Iscrizione CC</td><td>E-mail</td><td>Comune</td><td>Motivo</td><td>Riammetti</td></tr>
 	
@@ -103,7 +112,7 @@ if(request.getParameter("pagina")!=null){
 	 %>
 	
   	<tr>
-  	<td style="width:120px; height:100px;"><img class=img src=<%= rst.getString("P.logo")%> alt="Foto Ente"></td>
+  	<td style="width:120px; height:100px;"><img class=img src="<%= rst.getString("P.logo")%>" alt="Foto Ente"></td>
     <td><%= rst.getString("P.nome")%></td>
     <td><%= rst.getString("P.nome_referente")%></td>
     <td><%= rst.getString("P.iscrizione_cc")%></td>

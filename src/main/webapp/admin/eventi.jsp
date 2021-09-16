@@ -39,8 +39,12 @@ if(request.getParameter("Esci")!=null)
 <br>
 <br>
 <form action="/mercury/admin/eventi.jsp" method="post">
-<input type="submit" name="Esci" value="Esci">
-<input type="hidden" name="risultato" value=<%=accesso%>>
+<table border='3'>
+  <tr>
+  <td><input type="submit" name="Esci" value="Esci"></td>
+  </tr>
+</table>
+<input type="hidden" name="risultato" value="<%=accesso%>">
 <table border='3'>
   <tr>
   <td><input type="submit" name="pagina" value="Torna Alla Home"></td>
@@ -68,7 +72,7 @@ if(request.getParameter("Esci")!=null)
  if(modalita==null||modalita.equals("Elimina")){ 
  %>
 <form action="/mercury/AdminServer" method="post">
-<input type="hidden" name="risultato" value=<%=accesso%>>
+<input type="hidden" name="risultato" value="<%=accesso%>">
 <table border='3'>
  <tr><td>Immagine</td><td>Nome Evento</td><td>Tipo Evento</td><td>Ente</td><td>Comune</td><td>Data</td><td>Elimina</td></tr>
 	
@@ -79,7 +83,7 @@ if(request.getParameter("Esci")!=null)
 	 %>
 	
   	<tr>
-  	<td style="width:120px; height:100px;"><img class=img src=<%= rst.getString("E.immagini")%> alt="Foto Evento"></td>
+  	<td style="width:120px; height:100px;"><img class=img src="<%= rst.getString("E.immagini")%>" alt="Foto Evento"></td>
     <td><%= rst.getString("E.nome")%></td>
     <td><%= rst.getString("T.tipologia")%></td>
     <td><%= rst.getString("P.nome")%></td>
@@ -98,7 +102,7 @@ if(request.getParameter("Esci")!=null)
  else{
     %>
     <form action="/mercury/AdminServer" method="post">
-    <input type="hidden" name="risultato" value=<%=accesso%>>
+    <input type="hidden" name="risultato" value="<%=accesso%>">
 <table border='3'>
  <tr><td>Immagine</td><td>Nome Evento</td><td>Tipo Evento</td><td>Ente</td><td>Comune</td><td>Data</td><td>Ripristina</td></tr>
 	
@@ -108,7 +112,7 @@ if(request.getParameter("Esci")!=null)
 	 %>
 	
   	<tr>
-  	<td style="width:120px; height:100px;"><img class=img src=<%= rst.getString("E.immagini")%> alt="Foto Evento"></td>
+  	<td style="width:120px; height:100px;"><img class=img src="<%= rst.getString("E.immagini")%>" alt="Foto Evento"></td>
     <td><%= rst.getString("E.nome")%></td>
     <td><%= rst.getString("T.tipologia")%></td>
     <td><%= rst.getString("P.nome")%></td>
