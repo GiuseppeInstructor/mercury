@@ -8,10 +8,11 @@
 </head>
 <body>
             	 <%
-            	 	ResultSet rst2= null;
+            	 	ResultSet regioni= null;
+            	 	ResultSet province= null;
+            	 	ResultSet comuni= null;
                 	try {
-        				rst2=AdminServer.query().executeQuery("SELECT * FROM regione");
-        				rst2.next();
+        				regioni=AdminServer.query().executeQuery("SELECT * FROM regione");
         				} 
                 	catch (SQLException e) {
         				e.printStackTrace();
@@ -20,31 +21,67 @@
                	 %>
 <img src="D:\Esercizi\mercury\mercury.png" width="100" height="50">
 
-          <form id="ricerca">
+          <form id="ricerca" action="Ricerca" method="post">
+          
                 <span>Regione :</span>
                 <select name="regione">
-                <option value="0">--REGIONE--</option>
-                <option value="1">Puglia </option>
-            	<option value="2">--PROVINCE--</option>
-           		<option value="3">BT</option>
-                <option value="4">BA</option>
-                <option value="5">FG</option>
-                <option value="6">--Citta--</option>
-                <option value="7">Bisceglie</option>
-                <option value="8">Molfetta</option>
-                <option value="9">Andria</option>
-                <option value="10">Trani</option>
-                <option value="11">Foggia</option>
-                <option value="12">Bari</option>
-                </select><br/>
+                <option value="">--TUTTE LE REGIONI--</option>
+                <%while(regioni.next())
+                	{
+                %>
+                <option value="<%=regioni.getString("nome")%>"><%=regioni.getString("nome")%></option>
+                <%  } %>
+                </select>
+                               
+                <%
+                	if(request.getAttribute("region")!=null)
+                	{
+          
+                %>
+                <%
+                	try {
+        				province=AdminServer.query().executeQuery("SELECT * FROM provincia P INNER JOIN regione R WHERE P.regione_pk=R.pk AND R.nome='"+request.getAttribute("region")+"'");
+        				} 
+                	catch (SQLException e) {
+        				e.printStackTrace();
+        				}
+                	
+               	 %>
                 <span>Provincia :</span>
+
                 <select name="provincia">
-                    <option value=""></option>
-                </select><br/>
+                <option value="">--TUTTE LE PROVINCE--</option>
+                <%while(province.next())
+                {%>
+                    <option value="<%=province.getString("nome")%>"><%=province.getString("nome")%></option>
+                <%} %>
+                </select>
+                                
+                <%
+                	if(request.getAttribute("prov")!=null)
+                	{
+          
+                %>
+                <%
+                	try {
+        				comuni=AdminServer.query().executeQuery("SELECT * FROM comune C INNER JOIN provincia P WHERE C.provincia_pk=P.pk AND P.nome='"+request.getAttribute("prov")+"'");
+        				} 
+                	catch (SQLException e) {
+        				e.printStackTrace();
+        				}
+                	
+               	 %>
                 <span>Comune :</span>
                 <select name="comune">
-                    <option value=""></option>
+                <option value="">--TUTTE LE COMUNE--</option>
+                <%while(comuni.next())
+                		{%>
+                    <option value="<%=comuni.getString("nome")%>"><%=comuni.getString("nome") %></option>
+                    <%} %>
                 </select>
+                <%}//if provincia %>
+                <%}//if comune %>
+                <input type="submit" name="1" value="RICERCA">
             </form>
 </body>
 </html>

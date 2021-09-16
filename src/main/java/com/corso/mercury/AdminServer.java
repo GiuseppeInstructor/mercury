@@ -140,7 +140,7 @@ public static Statement query() {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn=DriverManager.getConnection("jdbc:mysql://localhost/mydb?user=root&password=123789");
+			Connection conn=DriverManager.getConnection("jdbc:mysql://localhost/mydb?user=root&password=F1nestra");
 			Statement st=conn.createStatement();
 			return st;
 		}
