@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="/mercury/admin/style.css" rel="stylesheet" type="text/css">
 <meta charset="ISO-8859-1">
 <title>MERCURY HOME PAGE</title>
 </head>
@@ -83,5 +84,32 @@
                 <%}//if comune %>
                 <input type="submit" name="1" value="RICERCA">
             </form>
+            
+            
+            <table border='3'>
+ <tr><td>Immagine</td><td>Nome Evento</td><td>Tipo Evento</td><td>Ente</td><td>Comune</td><td>Provincia</td><td>Regione</td><td>Data</td><td>DETTAGLI</td></tr>
+	
+	<%
+	 
+	 ResultSet rst=AdminServer.query().executeQuery("SELECT * FROM eventi E INNER JOIN comune C ON E.comune_pk=C.pk INNER JOIN tipoevento T ON E.tipoevento_pk=T.pk INNER JOIN ente K ON E.ente_pk=K.pk INNER JOIN provincia P INNER JOIN regione R WHERE E.eliminazione=0 AND K.eliminato=0 AND C.provincia_pk=P.pk AND P.regione_pk=R.pk ORDER BY data ASC");
+	 while(rst.next()){ 
+	 %>
+	
+  	<tr>
+  	<td style="width:120px; height:100px;"><img class=img src="<%= rst.getString("E.immagini")%>" alt="Foto Evento"></td>
+    <td><%= rst.getString("E.nome")%></td>
+    <td><%= rst.getString("T.tipologia")%></td>
+    <td><%= rst.getString("K.nome")%></td>
+    <td><%= rst.getString("C.nome")%></td>
+    <td><%= rst.getString("P.nome")%></td>
+    <td><%= rst.getString("R.nome")%></td>
+    <td><%= rst.getString("E.data")%></td>
+    <td><input type="submit" name="<%= rst.getString("nome")%>" value="Elimina"></td>
+  	</tr>
+  	
+  	<%
+  	}
+	 %>
+</table>
 </body>
 </html>
