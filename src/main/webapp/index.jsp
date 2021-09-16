@@ -15,15 +15,22 @@
             	 	ResultSet comuni= null;
         			regioni=AdminServer.query().executeQuery("SELECT * FROM regione");
                	 %>
-<img src="D:\Esercizi\mercury\mercury.png" width="100" height="50">
+<table>
+<tr>
+<td><a href="/mercury/index.jsp" ><img style="width:100; height:50px;" class=img src="https://cdn.freelogovectors.net/wp-content/uploads/2016/11/mercury-logo.jpg" alt="Foto Evento"></a></td>
 
+<td><a href="/mercury/admin/login.jsp" style="	margin-left :50px;">Login</a></td>
+<td><a href="/mercury/admin/register.jsp" style="	margin-left :50px;">Sei un ente? Registrati e aggiungi i tuoi eventi</a></td>
+<td><a href="/mercury/newsletter.jsp" style="	margin-left :50px;">Iscriviti alla NewsLetter</a></td>
+</tr>
+</table>
           <form id="ricerca" action="Ricerca" method="post">
          <%  
          if(request.getAttribute("provincia_pk")==null && request.getAttribute("regione_pk")==null && request.getAttribute("comune_pk")==null ){
          %>
                 <span>Regione :</span>
                 <select name="regione">
-                <option value="">--TUTTE LE REGIONI--</option>
+                <option value="def">--TUTTE LE REGIONI--</option>
                 <%
                 while(regioni.next())
                 	{
@@ -42,7 +49,7 @@
                	 %>
                 <span>Provincia :</span>
                 <select name="provincia">
-                <option value="">--TUTTE LE PROVINCE--</option>
+                <option value="def">--TUTTE LE PROVINCE--</option>
                 
                 <%while(province.next()){%>
                     <option value="<%=province.getString("pk")%>"><%=province.getString("nome")%></option>
@@ -60,7 +67,7 @@
                	 %>
                 <span>Comune :</span>
                 <select name="comune">
-                <option value="">--TUTTI I COMUNE--</option>
+                <option value="def">--TUTTI I COMUNE--</option>
                 
                 <%while(comuni.next()){%>
                     <option value="<%=comuni.getString("pk")%>"><%=comuni.getString("nome") %></option>

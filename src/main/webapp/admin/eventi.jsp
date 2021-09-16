@@ -39,15 +39,12 @@ if(request.getParameter("Esci")!=null)
 <br>
 <br>
 <form action="/mercury/admin/eventi.jsp" method="post">
-<table border='3'>
-  <tr>
-  <td><input type="submit" name="Esci" value="Esci"></td>
-  </tr>
-</table>
+
 <input type="hidden" name="risultato" value="<%=accesso%>">
 <table border='3'>
   <tr>
-  <td><input type="submit" name="pagina" value="Torna Alla Home"></td>
+  <td><a href="/mercury/index.jsp" ><img style="width:100; height:50px;" class=img src="https://cdn.freelogovectors.net/wp-content/uploads/2016/11/mercury-logo.jpg" alt="Foto Evento"></a></td>
+    <td><input type="submit" name="Esci" value="Esci"></td>
     <td><input type="submit" name="pagina" value="Elenco Enti"></td>
   </tr>
 </table>
@@ -61,8 +58,8 @@ if(request.getParameter("Esci")!=null)
 </form>
  <%
  String modalita = (String)request.getAttribute("modalita");
- String elimina="SELECT  E.data,E.immagini,E.nome,T.tipologia,P.nome,C.nome FROM eventi E INNER JOIN comune C ON E.comunek=C.pk INNER JOIN tipoevento T ON E.tipoevento_pk=T.pk INNER JOIN ente P ON E.ente_pk=P.pk WHERE E.eliminazione=0 AND P.eliminato=0 ORDER BY data ASC";
- String ripristina="SELECT E.data,E.immagini,E.nome,T.tipologia,P.nome,C.nome FROM eventi E INNER JOIN comune C ON E.comunek=C.pk INNER JOIN tipoevento T ON E.tipoevento_pk=T.pk INNER JOIN ente P ON E.ente_pk=P.pk WHERE E.eliminazione=1 AND P.eliminato=0 ORDER BY data ASC";
+ String elimina="SELECT  E.data,E.immagini,E.nome,T.tipologia,P.nome,C.nome FROM eventi E INNER JOIN comune C ON E.comune_pk=C.pk INNER JOIN tipoevento T ON E.tipoevento_pk=T.pk INNER JOIN ente P ON E.ente_pk=P.pk WHERE E.eliminazione=0 AND P.eliminato=0 ORDER BY data ASC";
+ String ripristina="SELECT E.data,E.immagini,E.nome,T.tipologia,P.nome,C.nome FROM eventi E INNER JOIN comune C ON E.comune_pk=C.pk INNER JOIN tipoevento T ON E.tipoevento_pk=T.pk INNER JOIN ente P ON E.ente_pk=P.pk WHERE E.eliminazione=1 AND P.eliminato=0 ORDER BY data ASC";
  if(modalita==null){
 	 modalita=request.getParameter("nome");
  }

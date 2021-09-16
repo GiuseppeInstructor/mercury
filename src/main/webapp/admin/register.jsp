@@ -8,6 +8,7 @@
 <title>Registrazione nuovo Ente</title>
 </head>
 <body>
+<a href="/mercury/index.jsp" ><img style="width:100; height:50px;" class=img src="https://cdn.freelogovectors.net/wp-content/uploads/2016/11/mercury-logo.jpg" alt="Foto Evento"></a>
 <form action="/mercury/Registrazione" method="post">
 <br>
 <br>

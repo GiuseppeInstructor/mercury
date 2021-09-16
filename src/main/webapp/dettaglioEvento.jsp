@@ -25,23 +25,24 @@ ResultSet rst=AdminServer.query().executeQuery("SELECT pk FROM eventi");
 </title>
 </head>
 <body>
- <table>
-  <tr>
-    <th>HOME PAGE</th>
-    <th></th>
-    <th></th>
+ <table  border='3' style="width:100%">
+ 
+  <tr style="width:100%">
+    <td><a href="/mercury/index.jsp" ><img style="width:100; height:50px;" class=img src="https://cdn.freelogovectors.net/wp-content/uploads/2016/11/mercury-logo.jpg" alt="Foto Evento"></a></td>
   </tr>
+  </table>
+   <table  border='2' style="width:100%" >
   <tr>
-    <td><%=evento.getString("E.immagini")%></td>
+    <td style="width:480px; height:400px;"><img class=img src="<%= evento.getString("E.immagini")%>" alt="Foto Evento"></td>
     <td><%=evento.getString("E.nome")%></td>
     <td><%=evento.getString("K.nome")%></td>
     <td><%=evento.getString("E.data")%></td>
     <td><%=evento.getString("C.nome")%>, <%=evento.getString("P.nome")%>, <%=evento.getString("R.nome")%></td>
   </tr>
-  <tr>
-    <td></td>
+  </table>
+ <table  border='3' style="width:100%">
+    <tr>
     <td><%=evento.getString("E.descrizione")%></td>
-
   </tr>
 </table> 
 

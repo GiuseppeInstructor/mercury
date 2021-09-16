@@ -39,15 +39,11 @@ if(request.getParameter("Esci")!=null)
 <br>
 <br>
 <form action="/mercury/admin/enti.jsp" method="post">
-<table border='3'>
-  <tr>
-  <td><input type="submit" name="Esci" value="Esci"></td>
-  </tr>
-</table>
 <input type="hidden" name="risultato" value="<%=accesso%>">
 <table border='3'>
   <tr>
-  <td><input type="submit" name="pagina" value="Torna Alla Home"></td>
+  <td><a href="/mercury/index.jsp" ><img style="width:100; height:50px;" class=img src="https://cdn.freelogovectors.net/wp-content/uploads/2016/11/mercury-logo.jpg" alt="Foto Evento"></a></td>
+    <td><input type="submit" name="Esci" value="Esci"></td>
     <td><input type="submit" name="pagina" value="Elenco Eventi"></td>
   </tr>
 </table>
