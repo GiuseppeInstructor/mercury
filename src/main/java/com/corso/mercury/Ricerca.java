@@ -23,9 +23,22 @@ public class Ricerca extends HttpServlet {
 		String Provincia = request.getParameter("provincia");
 		String Comune = request.getParameter("comune");
 		
-		request.setAttribute("region",Regione);
-		request.setAttribute("prov",Provincia);
-		request.setAttribute("comun",Comune);
+		if(request.getParameter("1")!=null)
+		{
+		request.setAttribute("regione_pk",Regione);
+		}
+		else if(request.getParameter("2")!=null) {
+			request.setAttribute("provincia_pk",Provincia);
+		}
+		else if(request.getParameter("3")!=null) {
+		request.setAttribute("comune_pk",Comune);
+		}
+		else if(request.getParameter("4")!=null){
+			request.setAttribute("regione_pk",null);
+			request.setAttribute("provincia_pk",null);
+			request.setAttribute("comune_pk",null);
+			
+		}
 		getServletContext().getRequestDispatcher("/index.jsp").forward(request,response);
 	}
 

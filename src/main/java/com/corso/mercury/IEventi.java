@@ -29,7 +29,7 @@ public class IEventi extends HttpServlet {
 		try {
 			if (!Immagine.equals("''") & !NomeEv.equals("''") & !Desc.equals("''") & !Data.equals("''") & !Citta.equals("null") & !TipoEv.equals("null") & EntePk!=null)
 			{
-				AdminServer.query().execute("INSERT INTO eventi (immagini,nome,descrizione,data,comunek,tipoevento_pk,ente_pk) VALUES ("+Immagine+","+NomeEv+","+Desc+","+Data+","+Citta+","+TipoEv+","+EntePk+")");
+				AdminServer.query().execute("INSERT INTO eventi (immagini,nome,descrizione,data,comune_pk,tipoevento_pk,ente_pk) VALUES ("+Immagine+","+NomeEv+","+Desc+","+Data+","+Citta+","+TipoEv+","+EntePk+")");
 				request.setAttribute("operazione","Operazione completata, Ricompila il modulo per inserire un nuovo eventi");
 				request.setAttribute("risultato",risultato);
 				getServletContext().getRequestDispatcher("/admin/InserireEventi.jsp").forward(request,response);
