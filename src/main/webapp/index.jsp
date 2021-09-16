@@ -88,7 +88,7 @@
                 
             </form>
             
-            <form action="/dettaglioEvento.jsp" method="post">
+            <form action="/mercury/dettaglioEvento.jsp" method="post">
             <table border='3'>
  <tr><td>Immagine</td><td>Nome Evento</td><td>Tipo Evento</td><td>Ente</td><td>Comune</td><td>Provincia</td><td>Regione</td><td>Data</td><td>DETTAGLI</td></tr>
 	
