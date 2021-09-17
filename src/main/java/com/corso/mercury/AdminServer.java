@@ -140,7 +140,7 @@ public static Statement query() {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn=DriverManager.getConnection("jdbc:mysql://localhost/mydb?user=root&password=F1nestra");
+			Connection conn=DriverManager.getConnection("jdbc:mysql://localhost/mydb?user=root&password=123789");
 			Statement st=conn.createStatement();
 			return st;
 		}
@@ -154,31 +154,32 @@ public static Statement query() {
 
 public static String[] login(String email, String password) {
 		String[] data = {"0",null,null};
-	
-		try {
-			ResultSet rst3=AdminServer.query().executeQuery("SELECT P.motivazione,P.nome,A.tipo,A.emailk,A.password,tipo FROM accesso A INNER JOIN ente P ON p.pk=A.ente_pk");
-			while(rst3.next()) {
-				if (rst3.getString("A.emailk").equals(email) && rst3.getString("A.password").equals(password) && rst3.getString("A.tipo").equals("3")) {
-					data[0]=rst3.getString("A.tipo");
-					data[1]=rst3.getString("P.nome");
-					data[2]=rst3.getString("P.motivazione");
-				}
-				else if (rst3.getString("A.emailk").equals(email) && rst3.getString("A.password").equals(password)) {
-					data[0]=rst3.getString("A.tipo");
-					data[1]=rst3.getString("P.nome");
-				}
-				else if (email.equals("admin")&& password.equals("123"))
-				{
-					data[0]="1";
-					data[1]="Admin";
-				}
-				
-			}
+		if (email.equals("admin")&& password.equals("123"))
+		{
+			data[0]="1";
+			data[1]="Admin";
+		}
+		else {
+			try {
+				ResultSet rst3=AdminServer.query().executeQuery("SELECT P.motivazione,P.nome,A.tipo,A.emailk,A.password,tipo FROM accesso A INNER JOIN ente P ON p.pk=A.ente_pk");
+				while(rst3.next()) {
+					if (rst3.getString("A.emailk").equals(email) && rst3.getString("A.password").equals(password) && rst3.getString("A.tipo").equals("3")) {
+						data[0]=rst3.getString("A.tipo");
+						data[1]=rst3.getString("P.nome");
+						data[2]=rst3.getString("P.motivazione");
+					}
+					else if (rst3.getString("A.emailk").equals(email) && rst3.getString("A.password").equals(password)) {
+						data[0]=rst3.getString("A.tipo");
+						data[1]=rst3.getString("P.nome");
+					}
 
-		} 
-		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				
+				}
+
+			} 
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return data;
 	}
